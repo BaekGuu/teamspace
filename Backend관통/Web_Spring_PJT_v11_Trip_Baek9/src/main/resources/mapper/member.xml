@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.ws.model.mapper.MemberMapper">
+	<select id="selectAllMember" resultType="Member">
+		select id,nickName,email from member
+	</select>
+
+	<select id="login" resultType="Member">
+		select id, nickName, password, email
+		from member
+		where id=#{id} and password=#{password}
+	</select>
+	
+	<select id="searchMemberById" parameterType="String" resultType="Member">
+		select id,nickName,email
+		from member
+		where id=#{id}
+	</select>
+
+	<insert id="insertMember" parameterType="Member">
+		insert into member(id,nickName,password,email)
+		values
+		(#{id},#{nickName},#{password},#{email})
+	</insert>
+	
+	<update id="updateMember" parameterType="Member">
+		update member 
+		set nickName=#{nickName} ,password=#{password}, email=#{email}
+		where id=#{id};
+	</update>
+	
+	<delete id="deleteMember" parameterType="Member">
+		delete from member 
+		where id=#{id} and password=#{password};
+	</delete>
+</mapper>
