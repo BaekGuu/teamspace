@@ -14,4 +14,5 @@ public interface MemberMapper {
 	public int updateMember(Member member);
 	public int deleteMember(Member member);
 	public Member searchMemberById(String id);
+	public Member checkNickname(String nickName);
 }

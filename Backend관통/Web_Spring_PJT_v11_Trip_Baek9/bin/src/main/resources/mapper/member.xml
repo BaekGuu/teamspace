@@ -35,10 +35,4 @@
 		delete from member 
 		where id=#{id} and password=#{password};
 	</delete>
-	
-	<select id="checkNickname" parameterType="String" resultType="Member">
-		select nickName
-		from member
-		where nickName=#{nickName};		
-	</select>
 </mapper>

@@ -13,9 +13,9 @@ values
 ("jaeseung","Jason","qwer1234","jaeseung@ssafy.com"),
 ("haram","Baek9","frontmaster","haram@gmail.com");
 
-#insert into member(id,nickName,password,email) 
-#values
-#("a","Jason","b","jaeseung@ssafy.com");
+insert into member(id,nickName,password,email) 
+values
+("a","Jason","b","jaeseung@ssafy.com");
 
 update member set nickName="재승" where id="jaeseung" and password="qwer1234";
 delete from member where id="a" and password="b";

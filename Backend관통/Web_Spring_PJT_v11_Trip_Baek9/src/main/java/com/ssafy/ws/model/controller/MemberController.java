@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.member.model.MemberDto;
 import com.ssafy.ws.model.Member;
 import com.ssafy.ws.model.service.MemberService;
 
@@ -56,7 +55,9 @@ public class MemberController {
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
-		if(memberService.searchMemberById(member.getId())!=null) {
+		
+		//닉네임, 아이디 중복 체크
+		if(memberService.searchMemberById(member.getId())!=null || memberService.checkNickname(member.getNickName())!=null ) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).headers(headers).build();
 		}
 		try {
@@ -112,6 +113,11 @@ public class MemberController {
 		headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
 		
 		try {
+			
+			if(memberService.checkNickname(member.getNickName())!=null) {//닉네임 중복 체크
+				return ResponseEntity.ok().headers(headers).body(0);
+			}
+			
 			int cnt = memberService.updateMember(member);
 			if(cnt==1) {
 				return ResponseEntity.ok().headers(headers).body(1);

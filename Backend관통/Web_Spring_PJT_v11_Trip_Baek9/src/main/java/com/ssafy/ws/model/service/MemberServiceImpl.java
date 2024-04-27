@@ -51,4 +51,9 @@ public class MemberServiceImpl implements MemberService{
 		return memberMapper.searchMemberById(id);
 	}
 
+	@Override
+	public Member checkNickname(String nickName) {
+		return memberMapper.checkNickname(nickName);
+	}
+
 }
