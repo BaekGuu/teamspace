@@ -27,7 +27,7 @@ create table if not exists board(
     title varchar(50) not null,
     content varchar(300) not null,
     writing_time datetime default current_timestamp, 
-	foreign key (writer_id) references member(id)
+	foreign key (writer_id) references member(id) on delete cascade
 );
 
 

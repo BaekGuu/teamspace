@@ -1,10 +1,10 @@
-package com.ssafy.ws.model.mapper;
+package com.ssafy.ws.member.mapper;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.ssafy.ws.model.Member;
+import com.ssafy.ws.member.model.Member;
 
 @Mapper
 public interface MemberMapper {
@@ -14,5 +14,6 @@ public interface MemberMapper {
 	public int updateMember(Member member);
 	public int deleteMember(Member member);
 	public Member searchMemberById(String id);
+	public Member searchMemberByNickname(String id);
 	public Member checkNickname(String nickName);
 }

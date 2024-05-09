@@ -1,10 +1,10 @@
-package com.ssafy.ws.model.mapper;
+package com.ssafy.ws.board.mapper;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.ssafy.ws.model.Board;
+import com.ssafy.ws.board.model.Board;
 
 @Mapper
 public interface BoardMapper {

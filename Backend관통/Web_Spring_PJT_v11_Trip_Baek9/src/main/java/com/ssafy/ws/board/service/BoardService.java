@@ -1,9 +1,9 @@
-package com.ssafy.ws.model.service;
+package com.ssafy.ws.board.service;
 
 import java.util.List;
 
-import com.ssafy.ws.model.Board;
-import com.ssafy.ws.model.Member;
+import com.ssafy.ws.board.model.Board;
+import com.ssafy.ws.member.model.Member;
 
 public interface BoardService {
 	public List<Board> selectAllBoard();

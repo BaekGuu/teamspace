@@ -1,8 +1,8 @@
-package com.ssafy.ws.model.service;
+package com.ssafy.ws.member.service;
 
 import java.util.List;
 
-import com.ssafy.ws.model.Member;
+import com.ssafy.ws.member.model.Member;
 
 public interface MemberService {
 	public List<Member> selectAllMember();

@@ -1,11 +1,11 @@
-package com.ssafy.ws.model.service;
+package com.ssafy.ws.member.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.ssafy.ws.model.Member;
-import com.ssafy.ws.model.mapper.MemberMapper;
+import com.ssafy.ws.member.mapper.MemberMapper;
+import com.ssafy.ws.member.model.Member;
 
 import lombok.RequiredArgsConstructor;
 
@@ -55,5 +55,6 @@ public class MemberServiceImpl implements MemberService{
 	public Member checkNickname(String nickName) {
 		return memberMapper.checkNickname(nickName);
 	}
+
 
 }

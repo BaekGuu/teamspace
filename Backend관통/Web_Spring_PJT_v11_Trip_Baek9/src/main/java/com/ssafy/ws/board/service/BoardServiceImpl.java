@@ -1,12 +1,12 @@
-package com.ssafy.ws.model.service;
+package com.ssafy.ws.board.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ssafy.ws.model.Board;
-import com.ssafy.ws.model.mapper.BoardMapper;
+import com.ssafy.ws.board.mapper.BoardMapper;
+import com.ssafy.ws.board.model.Board;
 
 import lombok.RequiredArgsConstructor;
 
