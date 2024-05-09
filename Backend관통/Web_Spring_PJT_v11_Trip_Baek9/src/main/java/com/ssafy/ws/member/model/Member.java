@@ -18,4 +18,12 @@ public class Member {
     private String password;
 	@Schema(description = "이메일 not null", example = "ssafy@ssafy.com")
     private String email;
+	
+	
+	public void checkData() {
+		if(this.id.trim()=="") this.id=null;
+		if(this.nickName.trim()=="") this.nickName=null;
+		if(this.password.trim()=="") this.password=null;
+		if(this.email.trim()=="") this.email=null;
+	}
 }           

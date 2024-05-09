@@ -75,8 +75,12 @@ public class MemberController {
 		if(memberService.searchMemberById(member.getId())!=null || memberService.checkNickname(member.getNickName())!=null ) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).headers(headers).build();
 		}
+		
+		
 		try {
+			member.checkData();
 			memberService.insertMember(member);
+			System.out.println("ok");
 			return ResponseEntity.ok().headers(headers).body(memberService.searchMemberById(member.getId()));
 		} catch (Exception e) {
 			return exceptionHandling(e);
