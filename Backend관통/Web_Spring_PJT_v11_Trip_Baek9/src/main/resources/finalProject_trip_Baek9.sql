@@ -1,3 +1,5 @@
+
+
 create database if not exists Baek9;
 use Baek9;
 
@@ -37,3 +39,4 @@ values
 ("haram","front 1등","front 정도야 껌이지");
 
 select * from board;
+select * from member;
