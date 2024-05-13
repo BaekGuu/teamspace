@@ -37,7 +37,7 @@ create table if not exists board(
 insert into board(writer_id,title,content)
 values
 ("jaeseung","frontend 담당 하람 누나","버스 감사요"),
-("haram","front 1등","front 정도야 껌이지");
+("haram","front 1등","front 정도야 껌이지"); 
 
 create table if not exists comment(
 	comment_id int auto_increment primary key,
@@ -49,13 +49,21 @@ create table if not exists comment(
     foreign key (board_id) references board(board_id) on delete cascade
 );
 
+
+
 insert into comment(comment, member_id, board_id)
 values
-("프론트 전문가는 다르네","jaeseung",1),
-("나만 믿으라구!!","haram",1),
+("프론트 전문가는 다르네","jaeseung",12),
+("나만 믿으라구!!","haram",12),
 ("Vue.js 정도는 쉽지","haram",2),
 ("믿습니다 하멘","jaeseung",2);
 
 select * from board;
 select * from member;
-select * from comment;
+select c.*,m.nickName 
+from comment as c join member as m
+on c.member_id=m.id;
+-- where board_id=2;
+
+update comment set comment="comment변경222"
+where board_id=2 and comment_id=17 and member_id="jaeseung";
