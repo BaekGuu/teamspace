@@ -1,5 +1,3 @@
-
-
 create database if not exists Baek9;
 use Baek9;
 

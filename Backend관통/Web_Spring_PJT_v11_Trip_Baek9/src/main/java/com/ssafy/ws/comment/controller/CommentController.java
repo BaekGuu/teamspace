@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/comment")
-@CrossOrigin("*")
+//@CrossOrigin("*")
 @RequiredArgsConstructor
 @Tag(name = "Comment 컨트롤러",description = "댓글의 CRUD를 담당하는 컨트롤러")
 public class CommentController {
