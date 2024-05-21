@@ -166,7 +166,7 @@ values
 insert into plan_date(plan_id) values(3);
 
 select * from plan_date where plan_id;
-delete from plan_date where id=3;
+delete from plan_date where id=8;
 
 select d.id as dayId,d.plan_id,p.member_id,p.plan_title,p.description from 
 plan_date as d join plan as p
