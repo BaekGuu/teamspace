@@ -52,6 +52,11 @@ public class SwaggerConfiguration {
 	public GroupedOpenApi commentApi() {
 		return GroupedOpenApi.builder().group("baek9-comment").pathsToMatch("/comment/**").build();
 	}
+	
+	@Bean
+	public GroupedOpenApi placeApi() {
+		return GroupedOpenApi.builder().group("baek9-place").pathsToMatch("/place/**").build();
+	}
 	/*
 	@Bean
 	public GroupedOpenApi fileApi() {

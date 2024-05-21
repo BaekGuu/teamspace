@@ -21,7 +21,8 @@ values
 (131676,"강원특별자치도 정선군 사북읍 하이원길 265","강원랜드 카지노","http://tong.visitkorea.or.kr/cms/resource/91/1982091_image2_1.jpg","")
 ;
 
-select * from place;
+select * 
+from place ;-- join barrierFree using(content_id);
 
 --  무장에 정보 항목값의 파라미터
 
@@ -106,11 +107,18 @@ values
 (895963,"장애인 주차장 있음(5대)_무장애 편의시설","","출입구까지 턱이 없어 휠체어 접근 가능함(우회도 이용)","","","대여가능(1대/무료)","주출입구는 턱이 없어 휠체어 접근 가능함","","장애인 화장실 있음","","","","","","","","","","","","","","","","","","",""),
 (131456,"장애인 전용 주차구역 있음(2대)_무장애 편의시설","","출입구까지 경사로가 설치되어 있음","","","","주출입구는 경사로가 있어 휠체어 접근 가능함","","","","","","","","","","","","","","","","","", "","","",""),
 (131676,"장애인 전용 주차구역 있음(대형주차장,주차타워,호텔 및 식음업장 주차장-카지노와 가장 가까운 장애인주차장은 운임정 주차장(6대) 및 호텔카지노 주차장)_무장애 편의시설","","","","","대여가능","단차가 없어 휠체어 접근 가능함","엘리베이터 있음","장애인 전용 화장실 있음","","장애인 전용 객실 있음(호텔카지노)","리조트 내 복지관 있음","점자유도로 있음_시각장애인 편의시설","","","","","","","","","","","카지노객실 청각장애인용 초인종 있음","대여가능(호텔에서 대여 가능하며 투숙객이 아닌 경우에도 대여 가능하나 신분증 보관이 필요함,사전문의필요)","수유실 있음(호텔 5층,카지노 이용객도 이용가능함)","","");
+insert into place(content_id) values(1234);
+insert into barrierFree(content_id) values(1234);
+
+update place set
+    address="a",
+    title="b",
+    image="c",
+    tel="d"
+where content_id=1234;
+delete from place where content_id=1234;
 
 select * from barrierFree;
-
-drop table plan;
-drop table plan_date;
 
 -- 여행 계획 개요
 create table if not exists plan(
@@ -126,29 +134,51 @@ insert into plan
 values
 ("jaeseung","강원도 여행 1","강원도 여행 1 description");
 
-select * from plan;
+insert into plan
+(member_id,plan_title,`description`)
+values
+("haram","여행 계획 테스트","여행 계획 테스트 description");
+
+update plan
+set plan_title="update title", `description`="update description"
+where id="2";
+
+delete from plan
+where member_id="jaeseung" and id="2";
+
+select id,member_id,plan_title,description 
+from plan
+;
 -- 여행 N일차 정보
+
+
 create table if not exists plan_date(
 	id int primary key auto_increment,
     plan_id int not null,
-    `day` int not null,
-    `date` date not null,
     foreign key (plan_id) references plan(id) on delete cascade
 );
 
-insert into plan_date (plan_id,`day`,`date`)
+insert into plan_date (plan_id)
 values
-(1,1,"2024-05-16"),
-(1,2,"2024-05-17"); 
+(1),
+(1); 
 
-select * from plan_date;
+insert into plan_date(plan_id) values(3);
+
+select * from plan_date where plan_id;
+delete from plan_date where id=3;
+
+select d.id as dayId,d.plan_id,p.member_id,p.plan_title,p.description from 
+plan_date as d join plan as p
+on d.plan_id=p.id;
 -- 여행 N일차 계획  
+
 
 create table if not exists plan_detail(
 	id int primary key auto_increment,
     content_id  int not null,
     date_id int not null,
-    priority int not null unique,
+    priority int not null,
     foreign key(content_id) references place(content_id) on delete cascade,
     foreign key(date_id) references plan_date(id) on delete cascade
 );
@@ -157,7 +187,30 @@ insert into plan_detail (content_id,date_id,priority)
 values
 (130869,1,1),
 (1857095,1,2),
-(130664,2,3),
-(129840,2,4);
+(130664,2,2),
+(129840,2,4),
+(130869,3,1),
+(1857095,3,2),
+(130664,3,3),
+(129840,3,4);
 
-select * from plan_detail;
+select plan_id,a.*
+from plan_date join 
+(select * from plan_detail join (place join barrierFree using (content_id)) using (content_id)) as a
+on plan_date.id=a.date_id
+where date_id=2
+order by priority asc;
+
+
+delete from plan_detail where id=4;
+
+update plan_detail 
+set date_id=2,priority=1
+where id=2;
+
+select plan_id,a.*
+from plan_date join 
+(select * from plan_detail join (place join barrierFree using (content_id)) using (content_id)) as a
+on plan_date.id=a.date_id
+order by date_id asc, priority asc
+-- where plan_id=3;

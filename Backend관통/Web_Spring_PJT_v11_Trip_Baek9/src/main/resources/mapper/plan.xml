@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.ws.plan.mapper.PlanMapper">
+
+	<!-- Plan crud & detail -->
+	<select id="selectAllPlan" resultType="Plan">
+		select id,member_id,plan_title,description from plan
+	</select>
+	
+	<select id="selectMemberPlan" parameterType="String" resultType="Plan">
+		select id,member_id,plan_title,description
+		from plan
+		where member_id=#{memberId}
+	</select>
+	
+	<insert id="insertPlan" parameterType="plan">
+		insert into plan
+		(member_id,plan_title,`description`)
+		values
+		(#{memberId},#{planTitle},#{description});
+	</insert>
+	
+	<update id="updatePlan" parameterType="plan">
+		update plan
+		set plan_title=#{planTitle}, `description`=#{description}
+		where id=#{id} and member_id=#{memberId};
+	</update>
+	
+	<delete id="deletePlan">
+		delete from plan
+		where member_id=#{memberId} and id=#{id};		
+	</delete>
+	
+	<select id="selectPlanDetailByPlanId" parameterType="int" resultType="PlanDetail">
+		select plan_id,a.*
+		from plan_date join 
+		(select * from plan_detail join (place join barrierFree using (content_id)) using (content_id)) as a
+		on plan_date.id=a.date_id
+		where plan_id=#{planId}
+		order by date_id asc, priority asc
+	</select>
+	
+	<select id="selectPlanByPlanId" parameterType="int" resultType="Plan">
+		select id,member_id,plan_title,description 
+		from plan
+		where id=#{planId}
+	</select>
+	
+	<!-- Place crud -->
+	
+	<select id="selectPlace" parameterType="int" resultType="Place">
+		select * 
+		from place join barrierFree using(content_id)
+		where content_id=#{contentId};
+	</select>
+	
+	<insert id="insertPlace" parameterType="Place">
+		insert into place 
+		values
+		(#{contentId},#{address},#{title},#{image},#{tel});
+		
+	</insert>
+	
+	<insert id="insertBarrierFree" parameterType="Place">
+		insert into barrierFree
+		values
+		(#{contentId},#{parking},#{route},#{publictransport},#{ticketoffice},#{promotion},#{wheelchair},#{exit},#{elevator},#{restroom},#{auditorium},#{room},#{handicapetc},#{braileblock},#{helpdog},#{guidehuman},#{audioguide},#{bigprint},#{brailepromotion},#{guidesystem},#{blindhandicapetc},#{signguide},#{videoguide},#{hearingroom},#{hearinghandicapetc},#{stroller},#{lactationroom},#{babysparechair},#{infantsfamilyetc});
+	</insert>
+	
+	
+	<update id="updatePlace" parameterType="Place">
+		update place set
+	    address=#{address},title=#{title},image=#{image},tel=#{tel}
+		where content_id=#{contentId};
+	</update>
+
+	<update id="updateBarrierFree" parameterType="Place">
+		update barrierFree set
+	    parking=#{parking},
+		route=#{route},
+		publictransport=#{publictransport},
+		ticketoffice=#{ticketoffice},
+		promotion=#{promotion},
+		wheelchair=#{wheelchair},
+		`exit`=#{exit},
+		elevator=#{elevator},
+		restroom=#{restroom},
+		auditorium=#{auditorium},
+		room=#{room},
+		handicapetc=#{handicapetc},
+		braileblock=#{braileblock},
+		helpdog=#{helpdog},
+		guidehuman=#{guidehuman},
+		audioguide=#{audioguide},
+		bigprint=#{bigprint},
+		brailepromotion=#{brailepromotion},
+		guidesystem=#{guidesystem},
+		blindhandicapetc=#{blindhandicapetc},
+		signguide=#{signguide},
+		videoguide=#{videoguide},
+		hearingroom=#{hearingroom},
+		hearinghandicapetc=#{hearinghandicapetc},
+		stroller=#{stroller},
+		lactationroom=#{lactationroom},
+		babysparechair=#{babysparechair},
+		infantsfamilyetc=#{infantsfamilyetc}
+		where content_id=#{contentId};
+	</update>
+	
+	<delete id="deletePlace" parameterType="int">
+		delete from place where content_id=#{contentId};
+	</delete>
+	
+	<!--planDate crud-->
+	
+	<select id="selectPlanDate" parameterType="int" resultType="PlanDate">
+		select id,plan_id from plan_date
+		where plan_id=#{planId}
+	</select>
+	
+	<insert id="insertDay" parameterType="int">
+		insert into plan_date(plan_id) values(#{planId});
+	</insert>
+	
+	<delete id="deleteDay" parameterType="int">
+		delete from plan_date where id=#{id};
+	</delete>
+	
+	<!--Place to Day CRUD  -->
+	
+	<select id="placeListByDay" parameterType="int" resultType="PlanDetail">
+		select plan_id,a.*
+		from plan_date join 
+		(select * from plan_detail join (place join barrierFree using (content_id)) using (content_id)) as a
+		on plan_date.id=a.date_id
+		where date_id=#{dateId}
+		order by priority asc;
+	</select>
+	
+	<insert id="insertPlaceToDay" parameterType="PlanDetail">
+		insert into plan_detail (content_id,date_id,priority)
+		values
+		(#{contentId},#{dateId},#{priority});
+	</insert>
+	
+	<update id="updatePlaceToDay" parameterType="PlanDetail">
+		update plan_detail 
+		set date_id=#{dateId},priority=#{priority}
+		where id=#{id};
+	</update>
+	
+	<delete id="deletePlaceToDay" parameterType="int">
+		delete from plan_detail where id=#{planDetailId};
+	</delete>
+	
+</mapper>
