@@ -10,6 +10,11 @@ create table if not exists place(
     tel varchar(30)
 );
 
+alter table place add column mapx varchar(15);
+alter table place add column mapy varchar(15);
+alter table place add column homepage varchar(150);
+alter table place add column overview varchar(900);
+
 insert into place 
 values
 (130869,"강원특별자치도 평창군 대관령면 경강로 5754","강원 신재생에너지전시관","http://tong.visitkorea.or.kr/cms/resource/50/2365250_image2_1.jpg",""),
@@ -149,6 +154,8 @@ where member_id="jaeseung" and id="2";
 select id,member_id,plan_title,description 
 from plan
 ;
+
+select id from plan order by id desc limit 1;
 -- 여행 N일차 정보
 
 
@@ -165,7 +172,7 @@ values
 
 insert into plan_date(plan_id) values(3);
 
-select * from plan_date where plan_id;
+select id from plan_date where plan_id=3 limit 1;
 delete from plan_date where id=8;
 
 select d.id as dayId,d.plan_id,p.member_id,p.plan_title,p.description from 
@@ -202,6 +209,7 @@ where date_id=2
 order by priority asc;
 
 
+
 delete from plan_detail where id=4;
 
 update plan_detail 
@@ -212,5 +220,5 @@ select plan_id,a.*
 from plan_date join 
 (select * from plan_detail join (place join barrierFree using (content_id)) using (content_id)) as a
 on plan_date.id=a.date_id
-order by date_id asc, priority asc
+order by date_id asc, priority asc, id desc;
 -- where plan_id=3;

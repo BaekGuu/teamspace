@@ -15,6 +15,12 @@ public class Place {
     private String title="";
     private String image="";
     private String tel="";
+    private String mapx="";
+    private String mapy="";
+    private String homepage="";
+    private String overview="";
+    
+    
     //장소 무장애 정보
     private String parking="";
     private String route="";
@@ -44,8 +50,6 @@ public class Place {
     private String lactationroom="";
     private String babysparechair="";
     private String infantsfamilyetc="";
-    
-    
     
     
 }

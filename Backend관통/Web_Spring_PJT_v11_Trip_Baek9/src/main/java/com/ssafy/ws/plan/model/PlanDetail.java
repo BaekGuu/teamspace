@@ -18,4 +18,5 @@ public class PlanDetail extends Place{
 		return "PlanDetail [id=" + id + ", planId=" + planId + ", dateId=" + dateId + ", priority=" + priority + "] "+super.toString()+"\n";
 	}
 	
+	
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.ws.plan.mapper.PlanMapper;
+import com.ssafy.ws.plan.model.Place;
 import com.ssafy.ws.plan.model.Plan;
 import com.ssafy.ws.plan.model.PlanDate;
 import com.ssafy.ws.plan.model.PlanDetail;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class PlanServiceImpl implements PlanService {
 
 	private final PlanMapper planMapper;
+	static PlaceServiceImpl impl = null; 
 
 	@Override
 	public List<Plan> selectAllPlan() {
@@ -33,7 +35,11 @@ public class PlanServiceImpl implements PlanService {
 	@Override
 	public int insertPlan(Plan plan) {
 		// TODO Auto-generated method stub
-		return planMapper.insertPlan(plan);
+		int cnt=planMapper.insertPlan(plan);
+		if(cnt==1) {
+			planMapper.insertDay(planMapper.recentPlanId());
+		}
+		return cnt;
 	}
 
 	@Override
@@ -57,15 +63,26 @@ public class PlanServiceImpl implements PlanService {
 		if (list.size() > 0) {
 			int dateId = list.get(0).getDateId();
 			ArrayList<PlanDetail> dayPlan = new ArrayList<>();
+			int priority = 1;
 			for (int i = 0; i < list.size(); i++) {
+				PlanDetail priorityRefactor = list.get(i);
 				if(dateId==list.get(i).getDateId()) {
-					dayPlan.add(list.get(i));
+					priorityRefactor.setPriority(priority);
+					planMapper.updatePlaceToDay(priorityRefactor);
+					priority++;
+
+					dayPlan.add(priorityRefactor);
 				}
 				else {
 					detail.getPlanDate().add(dayPlan);
 					dateId=list.get(i).getDateId();
 					dayPlan = new ArrayList<>();
-					dayPlan.add(list.get(i));
+					
+					priority=1;
+					priorityRefactor.setPriority(priority);
+					priority++;
+					
+					dayPlan.add(priorityRefactor);
 				}
 			}
 			detail.getPlanDate().add(dayPlan);
@@ -98,18 +115,48 @@ public class PlanServiceImpl implements PlanService {
 	@Override
 	public List<PlanDetail> placeListByDay(int dateId) {
 		// TODO Auto-generated method stub
-		return planMapper.placeListByDay(dateId);
+		System.out.println(planMapper.placeListByDay(dateId));
+		List<PlanDetail> list = planMapper.placeListByDay(dateId);
+		
+		for(int i=1;i<=list.size();i++) {
+			PlanDetail temp = list.get(i-1);
+			temp.setPriority(i);
+			planMapper.updatePlaceToDay(temp);
+		}
+
+		System.out.println(planMapper.placeListByDay(dateId));
+		
+		return list;
 	}
 
 	@Override
 	public int insertPlaceToDay(PlanDetail planDetail) {
 		// TODO Auto-generated method stub
+		System.out.println(planDetail);
+		if(impl==null) {
+			impl = new PlaceServiceImpl(planMapper);
+		}
+//		추가 전 장소 확인 후 DB 저장
+		if(impl.selectPlace(planDetail.getContentId())==null) {
+			impl.insertPlace(planDetail);			
+		}
+		else {
+			impl.updatePlace(planDetail);
+		}
+		
+		if(planDetail.getPriority()==0) {
+			planDetail.setPriority(1);
+		}
+		if(planDetail.getDateId()==0) {
+			planDetail.setDateId(planMapper.firstDay(planDetail.getPlanId()));
+		}
 		return planMapper.insertPlaceToDay(planDetail);
 	}
 
 	@Override
 	public int updatePlaceToDay(PlanDetail planDetail) {
 		// TODO Auto-generated method stub
+		
 		return planMapper.updatePlaceToDay(planDetail);
 	}
 

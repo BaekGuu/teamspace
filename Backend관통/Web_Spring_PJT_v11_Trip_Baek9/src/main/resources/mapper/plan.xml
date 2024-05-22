@@ -5,6 +5,10 @@
 <mapper namespace="com.ssafy.ws.plan.mapper.PlanMapper">
 
 	<!-- Plan crud & detail -->
+	<select id="recentPlanId" resultType="int">
+		select id from plan order by id desc limit 1; 
+	</select>
+	
 	<select id="selectAllPlan" resultType="Plan">
 		select id,member_id,plan_title,description from plan
 	</select>
@@ -39,7 +43,7 @@
 		(select * from plan_detail join (place join barrierFree using (content_id)) using (content_id)) as a
 		on plan_date.id=a.date_id
 		where plan_id=#{planId}
-		order by date_id asc, priority asc
+		order by date_id asc, priority asc, id desc
 	</select>
 	
 	<select id="selectPlanByPlanId" parameterType="int" resultType="Plan">
@@ -57,9 +61,9 @@
 	</select>
 	
 	<insert id="insertPlace" parameterType="Place">
-		insert into place 
+		insert into place(content_id,address,title,image,tel,mapx,mapy,homepage,overview)
 		values
-		(#{contentId},#{address},#{title},#{image},#{tel});
+		(#{contentId},#{address},#{title},#{image},#{tel},#{mapx},#{mapy},#{homepage},#{overview});
 		
 	</insert>
 	
@@ -72,7 +76,7 @@
 	
 	<update id="updatePlace" parameterType="Place">
 		update place set
-	    address=#{address},title=#{title},image=#{image},tel=#{tel}
+	    address=#{address},title=#{title},image=#{image},tel=#{tel},mapx=#{mapx},mapy=#{mapy},homepage=#{homepage},overview=#{overview}
 		where content_id=#{contentId};
 	</update>
 
@@ -137,6 +141,10 @@
 		on plan_date.id=a.date_id
 		where date_id=#{dateId}
 		order by priority asc;
+	</select>
+	
+	<select id="firstDay" parameterType="int">
+		select id from plan_date where plan_id=#{planId} limit 1;
 	</select>
 	
 	<insert id="insertPlaceToDay" parameterType="PlanDetail">

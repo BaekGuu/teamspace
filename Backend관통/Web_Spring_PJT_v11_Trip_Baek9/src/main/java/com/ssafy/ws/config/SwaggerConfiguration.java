@@ -57,6 +57,10 @@ public class SwaggerConfiguration {
 	public GroupedOpenApi placeApi() {
 		return GroupedOpenApi.builder().group("baek9-place").pathsToMatch("/place/**").build();
 	}
+	@Bean
+	public GroupedOpenApi planApi() {
+		return GroupedOpenApi.builder().group("baek9-plan").pathsToMatch("/plan/**").build();
+	}
 	/*
 	@Bean
 	public GroupedOpenApi fileApi() {
