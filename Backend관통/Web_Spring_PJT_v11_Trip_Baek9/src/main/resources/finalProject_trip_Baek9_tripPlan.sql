@@ -15,6 +15,7 @@ alter table place add column mapy varchar(15);
 alter table place add column homepage varchar(150);
 alter table place modify column homepage varchar(450);
 alter table place add column overview varchar(900);
+alter table place modify column overview varchar(9000);
 
 insert into place 
 values
@@ -159,12 +160,13 @@ from plan
 select id from plan order by id desc limit 1;
 -- 여행 N일차 정보
 
-
 create table if not exists plan_date(
 	id int primary key auto_increment,
     plan_id int not null,
     foreign key (plan_id) references plan(id) on delete cascade
 );
+
+
 
 insert into plan_date (plan_id)
 values
@@ -172,7 +174,7 @@ values
 (1); 
 
 insert into plan_date(plan_id) values(3);
-
+select * from plan_date where plan_id=1 and `date`="2024-05-23";
 select id from plan_date where plan_id=3 limit 1;
 delete from plan_date where id=8;
 
@@ -217,9 +219,10 @@ update plan_detail
 set date_id=2,priority=1
 where id=2;
 
-select plan_id,a.*
-from plan_date join 
-(select * from plan_detail join (place join barrierFree using (content_id)) using (content_id)) as a
-on plan_date.id=a.date_id
-order by date_id asc, priority asc, id desc;
+select plan_id,date,a.*
+		from plan_date join 
+		(select * from plan_detail join (place join barrierFree using (content_id)) using (content_id)) as a
+		on plan_date.id=a.date_id
+		where plan_id=14
+		order by `date` asc, date_id asc, priority asc, id desc;
 -- where plan_id=3;

@@ -120,7 +120,7 @@
 	<!--planDate crud-->
 	
 	<select id="selectPlanDate" parameterType="int" resultType="PlanDate">
-		select id,plan_id from plan_date
+		select id,plan_id,date from plan_date
 		where plan_id=#{planId}
 	</select>
 	

@@ -115,7 +115,6 @@ public class PlanServiceImpl implements PlanService {
 			planMapper.updatePlaceToDay(temp);
 		}
 
-		System.out.println(planMapper.placeListByDay(dateId));
 		
 		return list;
 	}
@@ -137,8 +136,8 @@ public class PlanServiceImpl implements PlanService {
 		if(planDetail.getPriority()==0) {
 			planDetail.setPriority(1);
 		}
-		if(planDetail.getDateId()==0) {
-			planDetail.setDateId(planMapper.firstDay(planDetail.getPlanId()));
+		if(planDetail.getDateId()==0) {				
+				planDetail.setDateId(planMapper.firstDay(planDetail.getPlanId()));
 		}
 		return planMapper.insertPlaceToDay(planDetail);
 	}
