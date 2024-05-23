@@ -1,7 +1,9 @@
 package com.ssafy.ws.plan.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +22,7 @@ public class Plan {
     private String description;
     
     //계획의 날짜별 방문 예정일 리스트로 저장해야 함.이중 List로 각 날짜별 방문 장소를 처리할 예정
-    List<ArrayList<PlanDetail>> planDate = new ArrayList<>(); 
+//    List<ArrayList<PlanDetail>> planDate = new ArrayList<>(); 
+    Map<Integer,ArrayList<PlanDetail>> planDate = new HashMap<>();
     
 }

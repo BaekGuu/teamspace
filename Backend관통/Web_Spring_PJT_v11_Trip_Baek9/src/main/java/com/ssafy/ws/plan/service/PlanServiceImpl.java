@@ -1,7 +1,9 @@
 package com.ssafy.ws.plan.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -57,36 +59,25 @@ public class PlanServiceImpl implements PlanService {
 
 	@Override
 	public Plan planDetail(int planId) {
+		List<PlanDate> day = planMapper.selectPlanDate(planId);
 		Plan detail = planMapper.selectPlanByPlanId(planId);
 		List<PlanDetail> list = planMapper.selectPlanDetailByPlanId(planId);
-
-		if (list.size() > 0) {
-			int dateId = list.get(0).getDateId();
-			ArrayList<PlanDetail> dayPlan = new ArrayList<>();
-			int priority = 1;
-			for (int i = 0; i < list.size(); i++) {
-				PlanDetail priorityRefactor = list.get(i);
-				if(dateId==list.get(i).getDateId()) {
-					priorityRefactor.setPriority(priority);
-					planMapper.updatePlaceToDay(priorityRefactor);
-					priority++;
-
-					dayPlan.add(priorityRefactor);
-				}
-				else {
-					detail.getPlanDate().add(dayPlan);
-					dateId=list.get(i).getDateId();
-					dayPlan = new ArrayList<>();
-					
-					priority=1;
-					priorityRefactor.setPriority(priority);
-					priority++;
-					
-					dayPlan.add(priorityRefactor);
-				}
-			}
-			detail.getPlanDate().add(dayPlan);
+		
+		Map<Integer,ArrayList<PlanDetail>> map = new HashMap<>();
+		
+		
+		for(int i=0;i<day.size();i++) {
+			map.put(day.get(i).getId(), new ArrayList<PlanDetail>());
 		}
+		
+		if(list.size()>0) {
+			for(int i=0;i<list.size();i++) {
+				map.get(list.get(i).getDateId()).add(list.get(i));
+			}
+		}
+		
+		detail.setPlanDate(map);
+		
 		return detail;
 	}
 
@@ -115,7 +106,7 @@ public class PlanServiceImpl implements PlanService {
 	@Override
 	public List<PlanDetail> placeListByDay(int dateId) {
 		// TODO Auto-generated method stub
-		System.out.println(planMapper.placeListByDay(dateId));
+		planMapper.placeListByDay(dateId);
 		List<PlanDetail> list = planMapper.placeListByDay(dateId);
 		
 		for(int i=1;i<=list.size();i++) {
@@ -132,7 +123,6 @@ public class PlanServiceImpl implements PlanService {
 	@Override
 	public int insertPlaceToDay(PlanDetail planDetail) {
 		// TODO Auto-generated method stub
-		System.out.println(planDetail);
 		if(impl==null) {
 			impl = new PlaceServiceImpl(planMapper);
 		}

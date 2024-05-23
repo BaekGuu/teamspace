@@ -81,7 +81,6 @@ public class PlaceController {
 	@ApiResponses(value= {
 			@ApiResponse(responseCode = "200",description = "성공시 1, 실패시 0 반환")
 	})
-	@PostMapping("/delete")
 	public ResponseEntity<?> deletePlan(@org.springframework.web.bind.annotation.RequestBody Place place) {
 		try {
 			HttpHeaders headers = new HttpHeaders();

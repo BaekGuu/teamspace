@@ -13,6 +13,7 @@ create table if not exists place(
 alter table place add column mapx varchar(15);
 alter table place add column mapy varchar(15);
 alter table place add column homepage varchar(150);
+alter table place modify column homepage varchar(450);
 alter table place add column overview varchar(900);
 
 insert into place 

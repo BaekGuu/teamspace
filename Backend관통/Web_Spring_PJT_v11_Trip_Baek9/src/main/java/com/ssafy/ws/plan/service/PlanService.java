@@ -8,8 +8,10 @@ import com.ssafy.ws.plan.model.PlanDetail;
 
 public interface PlanService {
 	
-	public List<Plan> selectAllPlan(); //모든 plan 반환
-	public List<Plan> selectMemberPlan(String memberId);//특정 member의 plan 전체 반환
+	//모든 plan 반환
+	public List<Plan> selectAllPlan(); 
+	//특정 member의 plan 전체 반환
+	public List<Plan> selectMemberPlan(String memberId);
 	public int insertPlan(Plan plan);
 	public int updatePlan(Plan plan);
 	public int deletePlan(Plan plan);

@@ -92,7 +92,6 @@ public class PlanController {
 	})
 	@PostMapping("/regist")
 	public ResponseEntity<?> insertPlan(@org.springframework.web.bind.annotation.RequestBody Plan plan) {
-		System.out.println(plan);
 		try {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
@@ -160,7 +159,6 @@ public class PlanController {
 	})
 	@PostMapping("/date/regist")
 	public ResponseEntity<?> insertDay(@org.springframework.web.bind.annotation.RequestBody PlanDate plandate) {
-		System.out.println(plandate);
 		try {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
@@ -177,7 +175,6 @@ public class PlanController {
 	})
 	@PostMapping("/date/delete")
 	public ResponseEntity<?> deleteDay(@org.springframework.web.bind.annotation.RequestBody PlanDate plandate) {
-		System.out.println(plandate);
 		try {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
@@ -213,7 +210,6 @@ public class PlanController {
 	@PostMapping("/place/regist")
 	public ResponseEntity<?> insertPlaceToDay(
 			@org.springframework.web.bind.annotation.RequestBody PlanDetail planDetail) {
-		
 		try {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
@@ -231,6 +227,8 @@ public class PlanController {
 	@PutMapping("/place/update")
 	public ResponseEntity<?> updatePlaceToDay(
 			@org.springframework.web.bind.annotation.RequestBody PlanDetail planDetail) {
+		
+		
 		try {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
